@@ -1,0 +1,28 @@
+version: "1"
+
+package:
+  id: io.github.FSM
+  name: FSM
+  version: 0.0.0.1
+  kind: app
+  description: |
+    Flight strip manager for online ATC controllers built with Qt and C++
+
+command:
+  - /opt/apps/io.github.FSM/files/bin/FSM
+
+base: org.deepin.foundation/23.0.0
+runtime: org.deepin.Runtime/23.0.1
+
+sources:
+  - kind: git
+    url: https://github.com/wjyrich/Flight-Strip-Manager-cpp.git
+    version: master
+    commit: c09beaad6572932ae5db2ba02d02f880458321b8
+
+build: |
+  cd /project/linglong/sources/Flight-Strip-Manager-cpp.git
+  cd FSM
+  qmake -makefile PREFIX=${PREFIX} LIB_INSTALL_DIR=${PREFIX}/lib/${TRIPLET}
+  make -j$(nproc)
+  make install
